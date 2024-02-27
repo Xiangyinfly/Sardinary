@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>OpenFeign源码解析-4 | Sardinary&#39;s Blog</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content=" ">
+    
+    <link rel="preload" href="/Sardinary/assets/css/0.styles.cca88062.css" as="style"><link rel="preload" href="/Sardinary/assets/js/app.b4352b80.js" as="script"><link rel="preload" href="/Sardinary/assets/js/7.1de0e771.js" as="script"><link rel="preload" href="/Sardinary/assets/js/2.32e86603.js" as="script"><link rel="preload" href="/Sardinary/assets/js/1.87af8fda.js" as="script"><link rel="preload" href="/Sardinary/assets/js/45.ee53ec88.js" as="script"><link rel="prefetch" href="/Sardinary/assets/js/10.49a810cd.js"><link rel="prefetch" href="/Sardinary/assets/js/11.7175f7e3.js"><link rel="prefetch" href="/Sardinary/assets/js/14.a5477566.js"><link rel="prefetch" href="/Sardinary/assets/js/15.439772b1.js"><link rel="prefetch" href="/Sardinary/assets/js/16.16e886bc.js"><link rel="prefetch" href="/Sardinary/assets/js/17.0e6e36bb.js"><link rel="prefetch" href="/Sardinary/assets/js/18.5e148afa.js"><link rel="prefetch" href="/Sardinary/assets/js/19.73412c71.js"><link rel="prefetch" href="/Sardinary/assets/js/20.e6e484b2.js"><link rel="prefetch" href="/Sardinary/assets/js/21.7c59eb62.js"><link rel="prefetch" href="/Sardinary/assets/js/22.1a4515f8.js"><link rel="prefetch" href="/Sardinary/assets/js/23.77f49651.js"><link rel="prefetch" href="/Sardinary/assets/js/24.2978efd9.js"><link rel="prefetch" href="/Sardinary/assets/js/25.c67021f4.js"><link rel="prefetch" href="/Sardinary/assets/js/26.6879f189.js"><link rel="prefetch" href="/Sardinary/assets/js/27.a2713265.js"><link rel="prefetch" href="/Sardinary/assets/js/28.0e7ec6a5.js"><link rel="prefetch" href="/Sardinary/assets/js/29.b33743d7.js"><link rel="prefetch" href="/Sardinary/assets/js/3.5b666661.js"><link rel="prefetch" href="/Sardinary/assets/js/30.3b66f6c0.js"><link rel="prefetch" href="/Sardinary/assets/js/31.a9a2ab1e.js"><link rel="prefetch" href="/Sardinary/assets/js/32.14ad86fd.js"><link rel="prefetch" href="/Sardinary/assets/js/33.1afd794c.js"><link rel="prefetch" href="/Sardinary/assets/js/34.31730445.js"><link rel="prefetch" href="/Sardinary/assets/js/35.acb79716.js"><link rel="prefetch" href="/Sardinary/assets/js/36.f161e3da.js"><link rel="prefetch" href="/Sardinary/assets/js/37.164bb569.js"><link rel="prefetch" href="/Sardinary/assets/js/38.0e4326d9.js"><link rel="prefetch" href="/Sardinary/assets/js/39.c0cdc477.js"><link rel="prefetch" href="/Sardinary/assets/js/4.95ecc938.js"><link rel="prefetch" href="/Sardinary/assets/js/40.4c8a03a6.js"><link rel="prefetch" href="/Sardinary/assets/js/41.b3e26267.js"><link rel="prefetch" href="/Sardinary/assets/js/42.6526990c.js"><link rel="prefetch" href="/Sardinary/assets/js/43.237a07a2.js"><link rel="prefetch" href="/Sardinary/assets/js/44.20a80a6c.js"><link rel="prefetch" href="/Sardinary/assets/js/46.55f62d10.js"><link rel="prefetch" href="/Sardinary/assets/js/47.2a4b0a3b.js"><link rel="prefetch" href="/Sardinary/assets/js/48.d2f40143.js"><link rel="prefetch" href="/Sardinary/assets/js/49.6f809adc.js"><link rel="prefetch" href="/Sardinary/assets/js/5.c87bfc3b.js"><link rel="prefetch" href="/Sardinary/assets/js/50.e8110b40.js"><link rel="prefetch" href="/Sardinary/assets/js/51.e5d33d8f.js"><link rel="prefetch" href="/Sardinary/assets/js/52.35081e55.js"><link rel="prefetch" href="/Sardinary/assets/js/53.f148b50f.js"><link rel="prefetch" href="/Sardinary/assets/js/54.c9fddbbe.js"><link rel="prefetch" href="/Sardinary/assets/js/55.3bf482f3.js"><link rel="prefetch" href="/Sardinary/assets/js/56.284247d8.js"><link rel="prefetch" href="/Sardinary/assets/js/57.cd2fa388.js"><link rel="prefetch" href="/Sardinary/assets/js/58.9717d8f3.js"><link rel="prefetch" href="/Sardinary/assets/js/59.387411ca.js"><link rel="prefetch" href="/Sardinary/assets/js/6.363116dc.js"><link rel="prefetch" href="/Sardinary/assets/js/60.10700fc9.js"><link rel="prefetch" href="/Sardinary/assets/js/61.37f12cd5.js"><link rel="prefetch" href="/Sardinary/assets/js/62.1ee2e76e.js"><link rel="prefetch" href="/Sardinary/assets/js/63.05cc0dee.js"><link rel="prefetch" href="/Sardinary/assets/js/64.2eefe5c7.js"><link rel="prefetch" href="/Sardinary/assets/js/65.57aedaf0.js"><link rel="prefetch" href="/Sardinary/assets/js/66.3362b95c.js"><link rel="prefetch" href="/Sardinary/assets/js/67.31c9d9fd.js"><link rel="prefetch" href="/Sardinary/assets/js/68.966d4fa1.js"><link rel="prefetch" href="/Sardinary/assets/js/69.a33abe62.js"><link rel="prefetch" href="/Sardinary/assets/js/70.11dd9007.js"><link rel="prefetch" href="/Sardinary/assets/js/71.8006b388.js"><link rel="prefetch" href="/Sardinary/assets/js/72.73f1646b.js"><link rel="prefetch" href="/Sardinary/assets/js/73.f53d7f97.js"><link rel="prefetch" href="/Sardinary/assets/js/74.db2bf712.js"><link rel="prefetch" href="/Sardinary/assets/js/8.1ffd42bb.js"><link rel="prefetch" href="/Sardinary/assets/js/9.8e14a092.js"><link rel="prefetch" href="/Sardinary/assets/js/vendors~docsearch.34a230bb.js">
+    <link rel="stylesheet" href="/Sardinary/assets/css/0.styles.cca88062.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>Sardinary's Blog</h3> <p class="description" data-v-59e6cb88> </p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>Sardinary Chen</span>
+          
+        <!---->
+        2024
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/Sardinary/" class="home-link router-link-active"><img src="/Sardinary/avatar.jpg" alt="Sardinary's Blog" class="logo"> <span class="site-name">Sardinary's Blog</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/Sardinary/" class="nav-link"><i class="undefined"></i>
+  🏠
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Sardinary/categories/后端/" class="nav-link"><i class="undefined"></i>
+  后端
+</a></li><li class="dropdown-item"><!----> <a href="/Sardinary/categories/Java/" class="nav-link"><i class="undefined"></i>
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/Sardinary/categories/中间件/" class="nav-link"><i class="undefined"></i>
+  中间件
+</a></li></ul></div></div><div class="nav-item"><a href="/Sardinary/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      Sardinary 🎈
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/Xiangyinfly" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/Sardinary/avatar.jpg" alt="author-avatar" class="personal-img" data-v-1fad0c41> <h3 class="name" data-v-1fad0c41>
+    Sardinary Chen
+  </h3> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>36</h3> <h6 data-v-1fad0c41>Articles</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>12</h3> <h6 data-v-1fad0c41>Tags</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/Sardinary/" class="nav-link"><i class="undefined"></i>
+  🏠
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Sardinary/categories/后端/" class="nav-link"><i class="undefined"></i>
+  后端
+</a></li><li class="dropdown-item"><!----> <a href="/Sardinary/categories/Java/" class="nav-link"><i class="undefined"></i>
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/Sardinary/categories/中间件/" class="nav-link"><i class="undefined"></i>
+  中间件
+</a></li></ul></div></div><div class="nav-item"><a href="/Sardinary/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      Sardinary 🎈
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/Xiangyinfly" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>OpenFeign源码解析-4</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>Sardinary Chen</span>
+          
+        <!---->
+        2024
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">OpenFeign源码解析-4</h1> <div data-v-8a445198><i class="iconfont reco-account" data-v-8a445198><span data-v-8a445198>Sardinary Chen</span></i> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2/26/2024</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>SpringCloud</span><span class="tag-item" data-v-8a445198>OpenFeign</span><span class="tag-item" data-v-8a445198>微服务</span><span class="tag-item" data-v-8a445198>源码解析</span></i></div></div> <div class="theme-reco-content content__default"><h1 id="fourth"><a href="#fourth" class="header-anchor">#</a> Fourth</h1> <h1 id="请求对象的构造-上"><a href="#请求对象的构造-上" class="header-anchor">#</a> <strong>请求对象的构造（上）</strong></h1> <h2 id="前三章节回顾"><a href="#前三章节回顾" class="header-anchor">#</a> <strong>前三章节回顾</strong></h2> <p>前三章的内容归纳起来就是讲了这样的问题：</p> <p><img src="/Sardinary/assets/img/Untitled4.64f4ca42.png" alt="Untitled"></p> <p>如何把接口转换为具有发送http请求能力的feign client对象以及如何整合到Spring容器中？</p> <h2 id="如何构造请求对象"><a href="#如何构造请求对象" class="header-anchor">#</a> <strong>如何构造请求对象?</strong></h2> <h3 id="思路分析"><a href="#思路分析" class="header-anchor">#</a> <strong>思路分析</strong></h3> <h3 id="http请求对象的分析-目标"><a href="#http请求对象的分析-目标" class="header-anchor">#</a> <strong>Http请求对象的分析（目标）</strong></h3> <p>URL: <a href="http://127.0.0.1:9000/consumer/feign/order/" target="_blank" rel="noopener noreferrer">http://127.0.0.1:9000/consumer/feign/order/<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>{1}?name=xxx&amp;age=18</p> <p>协议: http</p> <p>IP端口: 127.0.0.1:9000 -&gt; 注册中心获取</p> <p>URI: /consumer/feign/order/{id}</p> <p>路径参:  {1} (path variable)</p> <p>请求参：name=xxx,  age=18 (query)</p> <p>请求头:   headers</p> <p>请求体： body</p> <p>请求方法:   Get/Post/Put/Delete ...</p> <div class="language- extra-class"><pre class="language-text"><code>public final class Request {
+  private final HttpMethod httpMethod;
+  private final String url;
+  private final Map&lt;String, Collection&lt;String&gt;&gt; headers;
+  private final Body body;
+}
+</code></pre></div><h3 id="接口方法的分析-数据源"><a href="#接口方法的分析-数据源" class="header-anchor">#</a> <strong>接口方法的分析（数据源）</strong></h3> <p>方法本身的要素是否能表达所有Http请求的要素？</p> <p>方法的要素：</p> <p>方法名  ×</p> <p>参数(名称与类型) √</p> <p>返回值类型  ×</p> <p>URI -&gt; 注解 或 Java对象（URI对象）表示</p> <p>请求方法 -&gt; 注解</p> <p>路径参、请求参、请求头、请求体 -&gt; 方法的入参 + 注解</p> <h3 id="问题一-注解如何设计"><a href="#问题一-注解如何设计" class="header-anchor">#</a> <strong>问题一：注解如何设计？</strong></h3> <p>1）URI 和 请求方法可以合并在一个注解中</p> <p>2）对路径参、请求参、请求头、请求体分别设置对应的注解</p> <h3 id="feign"><a href="#feign" class="header-anchor">#</a> <strong>feign：</strong></h3> <p>@RequestLine/@Param/@QueryMap/@HeaderMap/@Body</p> <h3 id="open-feign"><a href="#open-feign" class="header-anchor">#</a> <strong>open feign：</strong></h3> <p>@RequestMapping/@PathVariable/@RequestParam/@SpringQueryMap/@RequestHeader/@RequestBody</p> <p>URI:  类的@RequestMapping + 方法的@RequestMapping</p> <p>请求方法： 方法的@RequestMapping</p> <p>路径参：参数的@PathVariable</p> <p>请求参：参数的@RequestParam + @SpringQueryMap</p> <p>请求头:  类的@RequestMapping(produce/consume/header)</p> <p>方法的@RequestMapping(produce/consume/header)</p> <p>参数的@RequestHeader</p> <h3 id="问题二-为什么选择springmvc注解"><a href="#问题二-为什么选择springmvc注解" class="header-anchor">#</a> <strong>问题二：为什么选择SpringMVC注解？</strong></h3> <p>SpringMVC： http 请求 -&gt; Java 对象</p> <p>open feign：Java 对象 -&gt; http 请求</p> <p>对于方法和注解信息，可以封装在新的对象中 -&gt; 方法元数据</p> <h3 id="方法元数据的分析"><a href="#方法元数据的分析" class="header-anchor">#</a> <strong>方法元数据的分析</strong></h3> <ol><li>各种参数的位置（索引）</li></ol> <p>2）参数名称，类型</p> <p>3）参数类型转换器</p> <p>4）编码信息</p> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">MethodMetadata</span> <span class="token keyword">implements</span> <span class="token class-name">Serializable</span> <span class="token punctuation">{</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token number">1L</span><span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token class-name">String</span> configKey<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token class-name">Type</span> returnType<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token class-name">Integer</span> urlIndex<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token class-name">Integer</span> bodyIndex<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token class-name">Integer</span> headerMapIndex<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token class-name">Integer</span> queryMapIndex<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token keyword">boolean</span> queryMapEncoded<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token class-name">Type</span> bodyType<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token class-name">RequestTemplate</span> template <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RequestTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> formParams <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">Collection</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> indexToName <span class="token operator">=</span>
+      <span class="token keyword">new</span> <span class="token class-name">LinkedHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">Collection</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">Class</span><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">Expander</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> indexToExpanderClass <span class="token operator">=</span>
+      <span class="token keyword">new</span> <span class="token class-name">LinkedHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">Class</span><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">Expander</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">Boolean</span><span class="token punctuation">&gt;</span></span> indexToEncoded <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">Boolean</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token class-name">Map</span><span class="token operator">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token class-name">Expander</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">&gt;</span> indexToExpander<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>Expander为参数类型转换器</p> <div class="language-java extra-class"><pre class="language-java"><code><span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span><span class="token constant">RUNTIME</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">PARAMETER</span><span class="token punctuation">,</span> <span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">FIELD</span><span class="token punctuation">,</span> <span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">METHOD</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token annotation punctuation">@interface</span> <span class="token class-name">Param</span> <span class="token punctuation">{</span>
+    <span class="token class-name">String</span> <span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
+
+    <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">Expander</span><span class="token punctuation">&gt;</span></span> <span class="token function">expander</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token class-name">ToStringExpander</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/** @deprecated */</span>
+    <span class="token keyword">boolean</span> <span class="token function">encoded</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">ToStringExpander</span> <span class="token keyword">implements</span> <span class="token class-name">Expander</span> <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token class-name">ToStringExpander</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">expand</span><span class="token punctuation">(</span><span class="token class-name">Object</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> value<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Expander</span> <span class="token punctuation">{</span>
+        <span class="token class-name">String</span> <span class="token function">expand</span><span class="token punctuation">(</span><span class="token class-name">Object</span> var1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>只适用于路径参数、请求参数、header，因为这三个都转为字符串。但是body不可以。</p> <h3 id="构造请求对象整体思路"><a href="#构造请求对象整体思路" class="header-anchor">#</a> <strong>构造请求对象整体思路</strong></h3> <p><img src="/Sardinary/assets/img/Untitled5.446cf061.png" alt="Untitled"></p> <p>构建请求对象分两步走：</p> <p>1）解析方法和注解（类、方法、参数），并把信息封装到方法元数据中  → 应用启动</p> <p>2）结合方法元数据和实际参数，构建请求对象 → 方法调用</p> <p>实参的类型转换，编码，填充</p> <p>object[]是因为反射时invoke方法的参数。我们根据<code>MethodMetadata</code> 中的各种index数值，在数组中对应index的位置即可拿到请求参数的对象，构建request</p> <h3 id="问题三-如何转换成方法元数据"><a href="#问题三-如何转换成方法元数据" class="header-anchor">#</a> <strong>问题三：如何转换成方法元数据？</strong></h3> <p>1）做成一个组件（Contract）</p> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Contract</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 解析接口的注解信息并封装为方法元数据的集合</span>
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">MethodMetadata</span><span class="token punctuation">&gt;</span></span> <span class="token function">parseAndValidatateMetadata</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> targetType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><img src="/Sardinary/assets/img/Untitled6.ee1dff4f.png" alt="Untitled"></p> <p>模板方法的设计模式</p> <p>接口  + 抽象实现 + 默认实现</p> <p>接口：提供扩展性 -&gt; Contract</p> <p>抽象实现： 抽取公共逻辑 -&gt; BaseContract</p> <p>默认实现：提供基本功能的使用 -&gt; Default（Feign中的实现）,   SpringMvcContract（OpenFeign中的实现，因为其未使用Feign中的那一套注解）</p> <p>2）Contract组件从何获得？</p> <p>Springboot自动装配 + 从FeignContext获取</p> <div class="language-java extra-class"><pre class="language-java"><code><span class="token annotation punctuation">@Configuration</span><span class="token punctuation">(</span>proxyBeanMethods <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FeignClientsConfiguration</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Bean</span>
+  <span class="token annotation punctuation">@ConditionalOnMissingBean</span>
+  <span class="token keyword">public</span> <span class="token class-name">Contract</span> <span class="token function">feignContract</span><span class="token punctuation">(</span><span class="token class-name">ConversionService</span> feignConversionService<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">SpringMvcContract</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>parameterProcessors<span class="token punctuation">,</span> feignConversionService<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="源码解读"><a href="#源码解读" class="header-anchor">#</a> <strong>源码解读</strong></h3> <h3 id="basecontract"><a href="#basecontract" class="header-anchor">#</a> <strong>BaseContract</strong></h3> <p>解析注解的顺序：类 -&gt; 方法 -&gt; 参数</p> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">BaseContract</span> <span class="token keyword">implements</span> <span class="token class-name">Contract</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">/** 解析接口的注解信息并封装为方法元数据的集合 */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">MethodMetadata</span><span class="token punctuation">&gt;</span></span> <span class="token function">parseAndValidatateMetadata</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> targetType<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token comment">// 接口不能带有泛型</span>
+          <span class="token function">checkState</span><span class="token punctuation">(</span>targetType<span class="token punctuation">.</span><span class="token function">getTypeParameters</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">&quot;Parameterized types unsupported: %s&quot;</span><span class="token punctuation">,</span>
+              targetType<span class="token punctuation">.</span><span class="token function">getSimpleName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+          <span class="token comment">// 接口最多只能有一个父接口</span>
+          <span class="token function">checkState</span><span class="token punctuation">(</span>targetType<span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">&quot;Only single inheritance supported: %s&quot;</span><span class="token punctuation">,</span>
+              targetType<span class="token punctuation">.</span><span class="token function">getSimpleName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+          <span class="token comment">// 如果传入的接口有一个父接口 那么该父接口必须是顶级接口</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>targetType<span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">checkState</span><span class="token punctuation">(</span>targetType<span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">,</span>
+                <span class="token string">&quot;Only single-level inheritance supported: %s&quot;</span><span class="token punctuation">,</span>
+                targetType<span class="token punctuation">.</span><span class="token function">getSimpleName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+
+          <span class="token comment">// 新建一个结果集容器</span>
+          <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">MethodMetadata</span><span class="token punctuation">&gt;</span></span> result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">MethodMetadata</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token comment">// 获取所有public方法，包括从父接口继承而来的</span>
+          <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Method</span> method <span class="token operator">:</span> targetType<span class="token punctuation">.</span><span class="token function">getMethods</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 排除掉从Object继承的方法，static方法，接口中的default方法</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>method<span class="token punctuation">.</span><span class="token function">getDeclaringClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token class-name">Object</span><span class="token punctuation">.</span><span class="token keyword">class</span> <span class="token operator">||</span>
+                <span class="token punctuation">(</span>method<span class="token punctuation">.</span><span class="token function">getModifiers</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token class-name">Modifier</span><span class="token punctuation">.</span><span class="token constant">STATIC</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token operator">||</span>
+                <span class="token class-name">Util</span><span class="token punctuation">.</span><span class="token function">isDefault</span><span class="token punctuation">(</span>method<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token comment">// 把方法解析为方法元数据 【关键代码】</span>
+            <span class="token class-name">MethodMetadata</span> metadata <span class="token operator">=</span> <span class="token function">parseAndValidateMetadata</span><span class="token punctuation">(</span>targetType<span class="token punctuation">,</span> method<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 重写方法不支持</span>
+            <span class="token function">checkState</span><span class="token punctuation">(</span><span class="token operator">!</span>result<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>metadata<span class="token punctuation">.</span><span class="token function">configKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;Overrides unsupported: %s&quot;</span><span class="token punctuation">,</span>
+                metadata<span class="token punctuation">.</span><span class="token function">configKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            result<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>metadata<span class="token punctuation">.</span><span class="token function">configKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> metadata<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+          <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>result<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/** 解析方法的注解并封装为方法元数据对象 */</span>
+    <span class="token keyword">protected</span> <span class="token class-name">MethodMetadata</span> <span class="token function">parseAndValidateMetadata</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> targetType<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token comment">// 创建MethodMetadata对象</span>
+          <span class="token class-name">MethodMetadata</span> data <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MethodMetadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+          <span class="token comment">// 设置返回值</span>
+          data<span class="token punctuation">.</span><span class="token function">returnType</span><span class="token punctuation">(</span><span class="token class-name">Types</span><span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>targetType<span class="token punctuation">,</span> targetType<span class="token punctuation">,</span> method<span class="token punctuation">.</span><span class="token function">getGenericReturnType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+          <span class="token comment">// 设置configKey,方法的唯一标识: 接口名#方法名(参数类型名称1,参数类型名称2)</span>
+          data<span class="token punctuation">.</span><span class="token function">configKey</span><span class="token punctuation">(</span><span class="token class-name">Feign</span><span class="token punctuation">.</span><span class="token function">configKey</span><span class="token punctuation">(</span>targetType<span class="token punctuation">,</span> method<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+          <span class="token comment">// 如果有父接口先处理父接口</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>targetType<span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">processAnnotationOnClass</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> targetType<span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+          <span class="token comment">// 再处理当前接口 【关键代码】</span>
+          <span class="token function">processAnnotationOnClass</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> targetType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+          <span class="token comment">// 处理方法的注解 【关键代码】</span>
+          <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Annotation</span> methodAnnotation <span class="token operator">:</span> method<span class="token punctuation">.</span><span class="token function">getAnnotations</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">processAnnotationOnMethod</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> methodAnnotation<span class="token punctuation">,</span> method<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+
+          <span class="token comment">// 只支持GET POST等http方法</span>
+          <span class="token function">checkState</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token function">template</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+              <span class="token string">&quot;Method %s not annotated with HTTP method type (ex. GET, POST)&quot;</span><span class="token punctuation">,</span>
+              method<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+      <span class="token comment">// 获取参数原始类型</span>
+          <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">[</span><span class="token punctuation">]</span> parameterTypes <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">getParameterTypes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token comment">// 获取参数通用类型</span>
+          <span class="token class-name">Type</span><span class="token punctuation">[</span><span class="token punctuation">]</span> genericParameterTypes <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">getGenericParameterTypes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token comment">// 获取参数注解 二维数组:因为可以有多个参数 每个参数有多个注解</span>
+          <span class="token class-name">Annotation</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> parameterAnnotations <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">getParameterAnnotations</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+          <span class="token keyword">int</span> count <span class="token operator">=</span> parameterAnnotations<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+          <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">boolean</span> isHttpAnnotation <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>parameterAnnotations<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+               <span class="token comment">// 处理每个参数的注解 如果其中有一个注解属于http注解 则isHttpAnnotation为true</span>
+               <span class="token comment">// 哪些属于http注解？如SpringMVC的@RequestHeader @PathVariable @RequestParam @SpringQueryMap</span>
+               <span class="token comment">//【关键代码】</span>
+               isHttpAnnotation <span class="token operator">=</span> <span class="token function">processAnnotationsOnParameter</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> parameterAnnotations<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>parameterTypes<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token constant">URI</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+               data<span class="token punctuation">.</span><span class="token function">urlIndex</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isHttpAnnotation <span class="token operator">&amp;&amp;</span> parameterTypes<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token class-name">Request<span class="token punctuation">.</span>Options</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+               <span class="token comment">// 参数类型不是URI或Options 也没有加http注解 则该参数判定为body</span>
+               <span class="token function">checkState</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token function">formParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                  <span class="token string">&quot;Body parameters cannot be used with form parameters.&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token function">checkState</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token function">bodyIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token string">&quot;Method has too many Body parameters: %s&quot;</span><span class="token punctuation">,</span> method<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token comment">// 设置body的位置和类型【关键代码】</span>
+               data<span class="token punctuation">.</span><span class="token function">bodyIndex</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               data<span class="token punctuation">.</span><span class="token function">bodyType</span><span class="token punctuation">(</span><span class="token class-name">Types</span><span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>targetType<span class="token punctuation">,</span> targetType<span class="token punctuation">,</span> genericParameterTypes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+
+          <span class="token comment">// ...</span>
+
+          <span class="token keyword">return</span> data<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+  <span class="token comment">/** 处理类上的注解 */</span>
+    <span class="token keyword">protected</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">processAnnotationOnClass</span><span class="token punctuation">(</span><span class="token class-name">MethodMetadata</span> data<span class="token punctuation">,</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> clz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">/** 处理方法上的注解 */</span>
+    <span class="token keyword">protected</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">processAnnotationOnMethod</span><span class="token punctuation">(</span><span class="token class-name">MethodMetadata</span> data<span class="token punctuation">,</span> <span class="token class-name">Annotation</span> annotation<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">/** 处理参数上的注解 */</span>
+    <span class="token keyword">protected</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">processAnnotationsOnParameter</span><span class="token punctuation">(</span><span class="token class-name">MethodMetadata</span> data<span class="token punctuation">,</span> <span class="token class-name">Annotation</span><span class="token punctuation">[</span><span class="token punctuation">]</span> annotations<span class="token punctuation">,</span> <span class="token keyword">int</span> paramIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre></div><aside>
+⚠️ 参数类型不是URI或Options 也没有加http注解 则该参数判定为body → 不加@RequestBody也会被认定为body
+</aside> <p>http注解有：@PathVariable @SpringQueryMap @RequestHeader @RequestParam</p> <h3 id="springmvccontract"><a href="#springmvccontract" class="header-anchor">#</a> <strong>SpringMvcContract</strong></h3> <p>类：@RequestMapping</p> <p>方法：@RequestMapping</p> <p>参数：@PathVariable @SpringQueryMap @RequestHeader @RequestParam</p> <p>@RequestMapping</p> <div class="language-java extra-class"><pre class="language-java"><code><span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">TYPE</span><span class="token punctuation">,</span> <span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">METHOD</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span><span class="token constant">RUNTIME</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Documented</span>
+<span class="token annotation punctuation">@Mapping</span>
+<span class="token keyword">public</span> <span class="token annotation punctuation">@interface</span> <span class="token class-name">RequestMapping</span> <span class="token punctuation">{</span>
+
+   <span class="token annotation punctuation">@AliasFor</span><span class="token punctuation">(</span><span class="token string">&quot;path&quot;</span><span class="token punctuation">)</span>
+   <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+   <span class="token annotation punctuation">@AliasFor</span><span class="token punctuation">(</span><span class="token string">&quot;value&quot;</span><span class="token punctuation">)</span>
+   <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">path</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+   <span class="token comment">/**
+    * The HTTP request methods to map to, narrowing the primary mapping:
+    * GET, POST, HEAD, OPTIONS, PUT, PATCH, DELETE, TRACE.
+    */</span>
+   <span class="token class-name">RequestMethod</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+   <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">params</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+   <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">headers</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+   <span class="token comment">/**
+    * header的Content-Type
+    */</span>
+   <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">consumes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+   <span class="token comment">/**
+  * header的Accept
+    */</span>
+   <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">produces</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+</code></pre></div><div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SpringMvcContract</span> <span class="token keyword">extends</span> <span class="token class-name">Contract<span class="token punctuation">.</span>BaseContract</span> <span class="token keyword">implements</span> <span class="token class-name">ResourceLoaderAware</span> <span class="token punctuation">{</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">ACCEPT</span> <span class="token operator">=</span> <span class="token string">&quot;Accept&quot;</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">CONTENT_TYPE</span> <span class="token operator">=</span> <span class="token string">&quot;Content-Type&quot;</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">TypeDescriptor</span> <span class="token constant">STRING_TYPE_DESCRIPTOR</span> <span class="token operator">=</span> <span class="token class-name">TypeDescriptor</span>
+      <span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">TypeDescriptor</span> <span class="token constant">ITERABLE_TYPE_DESCRIPTOR</span> <span class="token operator">=</span> <span class="token class-name">TypeDescriptor</span>
+      <span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span><span class="token class-name">Iterable</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">ParameterNameDiscoverer</span> <span class="token constant">PARAMETER_NAME_DISCOVERER</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DefaultParameterNameDiscoverer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 参数处理器 可以自动装配也可以使用默认的处理器</span>
+  <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Class</span><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">Annotation</span><span class="token punctuation">&gt;</span><span class="token punctuation">,</span> <span class="token class-name">AnnotatedParameterProcessor</span><span class="token punctuation">&gt;</span></span> annotatedArgumentProcessors<span class="token punctuation">;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Method</span><span class="token punctuation">&gt;</span></span> processedMethods <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">ConversionService</span> conversionService<span class="token punctuation">;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">ConvertingExpanderFactory</span> convertingExpanderFactory<span class="token punctuation">;</span>
+
+  <span class="token keyword">private</span> <span class="token class-name">ResourceLoader</span> resourceLoader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DefaultResourceLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token class-name">SpringMvcContract</span><span class="token punctuation">(</span>
+      <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">AnnotatedParameterProcessor</span><span class="token punctuation">&gt;</span></span> annotatedParameterProcessors<span class="token punctuation">,</span>
+      <span class="token class-name">ConversionService</span> conversionService<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Assert</span><span class="token punctuation">.</span><span class="token function">notNull</span><span class="token punctuation">(</span>annotatedParameterProcessors<span class="token punctuation">,</span>
+        <span class="token string">&quot;Parameter processors can not be null.&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Assert</span><span class="token punctuation">.</span><span class="token function">notNull</span><span class="token punctuation">(</span>conversionService<span class="token punctuation">,</span> <span class="token string">&quot;ConversionService can not be null.&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 初始化参数处理器</span>
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">AnnotatedParameterProcessor</span><span class="token punctuation">&gt;</span></span> processors<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>annotatedParameterProcessors<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      processors <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>annotatedParameterProcessors<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      processors <span class="token operator">=</span> <span class="token function">getDefaultAnnotatedArgumentsProcessors</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>annotatedArgumentProcessors <span class="token operator">=</span> <span class="token function">toAnnotatedArgumentProcessorMap</span><span class="token punctuation">(</span>processors<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 创建参数转换器工厂 真正的转换功能来自conversionService</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>conversionService <span class="token operator">=</span> conversionService<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>convertingExpanderFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConvertingExpanderFactory</span><span class="token punctuation">(</span>conversionService<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+    <span class="token comment">/** 获取默认处理器 */</span>
+  <span class="token keyword">private</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">AnnotatedParameterProcessor</span><span class="token punctuation">&gt;</span></span> <span class="token function">getDefaultAnnotatedArgumentsProcessors</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">AnnotatedParameterProcessor</span><span class="token punctuation">&gt;</span></span> annotatedArgumentResolvers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    annotatedArgumentResolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PathVariableParameterProcessor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 处理@PathVavirable</span>
+    annotatedArgumentResolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RequestParamParameterProcessor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 处理@RequestParam</span>
+    annotatedArgumentResolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RequestHeaderParameterProcessor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 处理@RequestHeader</span>
+    annotatedArgumentResolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">QueryMapParameterProcessor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 处理@SpringQueryMap</span>
+    <span class="token keyword">return</span> annotatedArgumentResolvers<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">public</span> <span class="token class-name">MethodMetadata</span> <span class="token function">parseAndValidateMetadata</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> targetType<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 方法先放入缓存中 表示已经处理</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>processedMethods<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">Feign</span><span class="token punctuation">.</span><span class="token function">configKey</span><span class="token punctuation">(</span>targetType<span class="token punctuation">,</span> method<span class="token punctuation">)</span><span class="token punctuation">,</span> method<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 调用父类的parseAndValidateMetadata</span>
+    <span class="token class-name">MethodMetadata</span> md <span class="token operator">=</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">parseAndValidateMetadata</span><span class="token punctuation">(</span>targetType<span class="token punctuation">,</span> method<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 处理类上的RequestMapping注解</span>
+        <span class="token comment">// 因为RequestMapping注解可以加在类上和方法上 两者中注解值有优先级问题</span>
+    <span class="token class-name">RequestMapping</span> classAnnotation <span class="token operator">=</span> <span class="token function">findMergedAnnotation</span><span class="token punctuation">(</span>targetType<span class="token punctuation">,</span>
+        <span class="token class-name">RequestMapping</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>classAnnotation <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 解析header中的produces</span>
+            <span class="token comment">// 此时可能已经从方法的RequestMapping注解获得produces的值</span>
+            <span class="token comment">// 这样处理表示方法上的RequestMapping注解优先于类上的RequestMapping注解</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>md<span class="token punctuation">.</span><span class="token function">template</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">headers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span><span class="token constant">ACCEPT</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">parseProduces</span><span class="token punctuation">(</span>md<span class="token punctuation">,</span> method<span class="token punctuation">,</span> classAnnotation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token comment">// 解析header中的consumes 原理同produces</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>md<span class="token punctuation">.</span><span class="token function">template</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">headers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span><span class="token constant">CONTENT_TYPE</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">parseConsumes</span><span class="token punctuation">(</span>md<span class="token punctuation">,</span> method<span class="token punctuation">,</span> classAnnotation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token comment">// 解析headers</span>
+      <span class="token function">parseHeaders</span><span class="token punctuation">(</span>md<span class="token punctuation">,</span> method<span class="token punctuation">,</span> classAnnotation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> md<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+    <span class="token comment">/** 处理类上的注解(RequestMapping) */</span>
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">processAnnotationOnClass</span><span class="token punctuation">(</span><span class="token class-name">MethodMetadata</span> data<span class="token punctuation">,</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> clz<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>clz<span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token class-name">RequestMapping</span> classAnnotation <span class="token operator">=</span> <span class="token function">findMergedAnnotation</span><span class="token punctuation">(</span>clz<span class="token punctuation">,</span>
+          <span class="token class-name">RequestMapping</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 这里只处理类上RequestMapping的path,</span>
+            <span class="token comment">// 其他produces, consumes, headers放在解析方法上的RequestMapping注解之后</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>classAnnotation <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 如果类上的@RequestMapping有value(path) 处理后放入uri中</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>classAnnotation<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token class-name">String</span> pathValue <span class="token operator">=</span> <span class="token function">emptyToNull</span><span class="token punctuation">(</span>classAnnotation<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token comment">// 解析path中的${}</span>
+          pathValue <span class="token operator">=</span> <span class="token function">resolve</span><span class="token punctuation">(</span>pathValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token comment">// 保证uri以/开头</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>pathValue<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            pathValue <span class="token operator">=</span> <span class="token string">&quot;/&quot;</span> <span class="token operator">+</span> pathValue<span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+                    <span class="token comment">// 放入uri中</span>
+          data<span class="token punctuation">.</span><span class="token function">template</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">uri</span><span class="token punctuation">(</span>pathValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">/** 处理方法上的注解(RequestMapping) */</span>
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">processAnnotationOnMethod</span><span class="token punctuation">(</span><span class="token class-name">MethodMetadata</span> data<span class="token punctuation">,</span>
+      <span class="token class-name">Annotation</span> methodAnnotation<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 如果不是@RequestMapping注解本身 也不带有@RequestMapping注解的话就返回</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token class-name">RequestMapping</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">isInstance</span><span class="token punctuation">(</span>methodAnnotation<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>methodAnnotation
+        <span class="token punctuation">.</span><span class="token function">annotationType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">isAnnotationPresent</span><span class="token punctuation">(</span><span class="token class-name">RequestMapping</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token class-name">RequestMapping</span> methodMapping <span class="token operator">=</span> <span class="token function">findMergedAnnotation</span><span class="token punctuation">(</span>method<span class="token punctuation">,</span> <span class="token class-name">RequestMapping</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 解析HTTP Method</span>
+    <span class="token class-name">RequestMethod</span><span class="token punctuation">[</span><span class="token punctuation">]</span> methods <span class="token operator">=</span> methodMapping<span class="token punctuation">.</span><span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>methods<span class="token punctuation">.</span>length <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      methods <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RequestMethod</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token class-name">RequestMethod</span><span class="token punctuation">.</span><span class="token constant">GET</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">checkOne</span><span class="token punctuation">(</span>method<span class="token punctuation">,</span> methods<span class="token punctuation">,</span> <span class="token string">&quot;method&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    data<span class="token punctuation">.</span><span class="token function">template</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">method</span><span class="token punctuation">(</span><span class="token class-name">Request<span class="token punctuation">.</span>HttpMethod</span><span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>methods<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 解析path</span>
+    <span class="token function">checkAtMostOne</span><span class="token punctuation">(</span>method<span class="token punctuation">,</span> methodMapping<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;value&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>methodMapping<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token class-name">String</span> pathValue <span class="token operator">=</span> <span class="token function">emptyToNull</span><span class="token punctuation">(</span>methodMapping<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>pathValue <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        pathValue <span class="token operator">=</span> <span class="token function">resolve</span><span class="token punctuation">(</span>pathValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>pathValue<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>data<span class="token punctuation">.</span><span class="token function">template</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">endsWith</span><span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          pathValue <span class="token operator">=</span> <span class="token string">&quot;/&quot;</span> <span class="token operator">+</span> pathValue<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        data<span class="token punctuation">.</span><span class="token function">template</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">uri</span><span class="token punctuation">(</span>pathValue<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 解析header中的produces</span>
+    <span class="token function">parseProduces</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> method<span class="token punctuation">,</span> methodMapping<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 解析header中的consumes</span>
+    <span class="token function">parseConsumes</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> method<span class="token punctuation">,</span> methodMapping<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 解析headers</span>
+    <span class="token function">parseHeaders</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> method<span class="token punctuation">,</span> methodMapping<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    data<span class="token punctuation">.</span><span class="token function">indexToExpander</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LinkedHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">Param<span class="token punctuation">.</span>Expander</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">/** 处理参数上的注解 */</span>
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">protected</span> <span class="token keyword">boolean</span> <span class="token function">processAnnotationsOnParameter</span><span class="token punctuation">(</span><span class="token class-name">MethodMetadata</span> data<span class="token punctuation">,</span>
+      <span class="token class-name">Annotation</span><span class="token punctuation">[</span><span class="token punctuation">]</span> annotations<span class="token punctuation">,</span> <span class="token keyword">int</span> paramIndex<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">boolean</span> isHttpAnnotation <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+    <span class="token class-name">AnnotatedParameterProcessor<span class="token punctuation">.</span>AnnotatedParameterContext</span> context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleAnnotatedParameterContext</span><span class="token punctuation">(</span>
+        data<span class="token punctuation">,</span> paramIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Method</span> method <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>processedMethods<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token function">configKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Annotation</span> parameterAnnotation <span class="token operator">:</span> annotations<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 根据参数注解类型获取对应的参数处理器</span>
+      <span class="token class-name">AnnotatedParameterProcessor</span> processor <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>annotatedArgumentProcessors
+          <span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>parameterAnnotation<span class="token punctuation">.</span><span class="token function">annotationType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>processor <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Annotation</span> processParameterAnnotation<span class="token punctuation">;</span>
+        processParameterAnnotation <span class="token operator">=</span> <span class="token function">synthesizeWithMethodParameterNameAsFallbackValue</span><span class="token punctuation">(</span>
+            parameterAnnotation<span class="token punctuation">,</span> method<span class="token punctuation">,</span> paramIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment">// 参数处理器处理【关键代码】</span>
+        isHttpAnnotation <span class="token operator">|=</span> processor<span class="token punctuation">.</span><span class="token function">processArgument</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span>
+            processParameterAnnotation<span class="token punctuation">,</span> method<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+        <span class="token comment">// 如果是http注解并且没有对应的expander</span>
+        <span class="token comment">// 什么expander -&gt; 参数转换器</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>isHttpAnnotation <span class="token operator">&amp;&amp;</span> data<span class="token punctuation">.</span><span class="token function">indexToExpander</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>paramIndex<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token class-name">TypeDescriptor</span> typeDescriptor <span class="token operator">=</span> <span class="token function">createTypeDescriptor</span><span class="token punctuation">(</span>method<span class="token punctuation">,</span> paramIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>conversionService<span class="token punctuation">.</span><span class="token function">canConvert</span><span class="token punctuation">(</span>typeDescriptor<span class="token punctuation">,</span>
+          <span class="token constant">STRING_TYPE_DESCRIPTOR</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Param<span class="token punctuation">.</span>Expander</span> expander <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>convertingExpanderFactory
+            <span class="token punctuation">.</span><span class="token function">getExpander</span><span class="token punctuation">(</span>typeDescriptor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>expander <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          data<span class="token punctuation">.</span><span class="token function">indexToExpander</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>paramIndex<span class="token punctuation">,</span> expander<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> isHttpAnnotation<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+    <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="annotatedparameterprocessor"><a href="#annotatedparameterprocessor" class="header-anchor">#</a> <strong>AnnotatedParameterProcessor</strong></h3> <p>PathVariableParameterProcessor：@PathVariable 解析路径参数</p> <p>QueryMapParameterProcessor: @SpringQueryMap 解析请求参数</p> <p>RequestHeaderParameterProcessor: @RequestHeader 解析请求头</p> <p>RequestParamParameterProcessor：@RequestParam 解析请求参数</p> <p>QueryMapParameterProcessor 与 RequestParamParameterProcessor的区别：</p> <p>前者可以解析自定义实体对象，Map和基本类型，没有特别的限制</p> <p>后者只能解析Map和基本类型不能解析自定义对象类型</p> <h3 id="querymapparameterprocessor"><a href="#querymapparameterprocessor" class="header-anchor">#</a> <strong>QueryMapParameterProcessor</strong></h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">QueryMapParameterProcessor</span> <span class="token keyword">implements</span> <span class="token class-name">AnnotatedParameterProcessor</span> <span class="token punctuation">{</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">SpringQueryMap</span><span class="token punctuation">&gt;</span></span> <span class="token constant">ANNOTATION</span> <span class="token operator">=</span> <span class="token class-name">SpringQueryMap</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span>
+
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">public</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">Annotation</span><span class="token punctuation">&gt;</span></span> <span class="token function">getAnnotationType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token constant">ANNOTATION</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">processArgument</span><span class="token punctuation">(</span><span class="token class-name">AnnotatedParameterContext</span> context<span class="token punctuation">,</span>
+      <span class="token class-name">Annotation</span> annotation<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> paramIndex <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getParameterIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">MethodMetadata</span> metadata <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getMethodMetadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 对@SpringQueryMap注解所对应的参数的类型没有限制</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>metadata<span class="token punctuation">.</span><span class="token function">queryMapIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      metadata<span class="token punctuation">.</span><span class="token function">queryMapIndex</span><span class="token punctuation">(</span>paramIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      metadata<span class="token punctuation">.</span><span class="token function">queryMapEncoded</span><span class="token punctuation">(</span><span class="token class-name">SpringQueryMap</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">cast</span><span class="token punctuation">(</span>annotation<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">encoded</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="requestparamparameterprocessor"><a href="#requestparamparameterprocessor" class="header-anchor">#</a> <strong>RequestParamParameterProcessor</strong></h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RequestParamParameterProcessor</span> <span class="token keyword">implements</span> <span class="token class-name">AnnotatedParameterProcessor</span> <span class="token punctuation">{</span>
+
+	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">RequestParam</span><span class="token punctuation">&gt;</span></span> <span class="token constant">ANNOTATION</span> <span class="token operator">=</span> <span class="token class-name">RequestParam</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">Annotation</span><span class="token punctuation">&gt;</span></span> <span class="token function">getAnnotationType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token constant">ANNOTATION</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">processArgument</span><span class="token punctuation">(</span><span class="token class-name">AnnotatedParameterContext</span> context<span class="token punctuation">,</span>
+			<span class="token class-name">Annotation</span> annotation<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">int</span> parameterIndex <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getParameterIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> parameterType <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">getParameterTypes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span>parameterIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>
+		<span class="token class-name">MethodMetadata</span> data <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getMethodMetadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 参数必须是Map类型 否则不可以成为QueryMap</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">Map</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">isAssignableFrom</span><span class="token punctuation">(</span>parameterType<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token function">checkState</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token function">queryMapIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+					<span class="token string">&quot;Query map can only be present once.&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			data<span class="token punctuation">.</span><span class="token function">queryMapIndex</span><span class="token punctuation">(</span>parameterIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+			<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token class-name">RequestParam</span> requestParam <span class="token operator">=</span> <span class="token constant">ANNOTATION</span><span class="token punctuation">.</span><span class="token function">cast</span><span class="token punctuation">(</span>annotation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token class-name">String</span> name <span class="token operator">=</span> requestParam<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">checkState</span><span class="token punctuation">(</span><span class="token function">emptyToNull</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+				<span class="token string">&quot;RequestParam.value() was empty on parameter %s&quot;</span><span class="token punctuation">,</span> parameterIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		context<span class="token punctuation">.</span><span class="token function">setParameterName</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token class-name">Collection</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> query <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">setTemplateParameter</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>
+				data<span class="token punctuation">.</span><span class="token function">template</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">queries</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		data<span class="token punctuation">.</span><span class="token function">template</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> query<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>实参类型转换和填充</p> <div class="language- extra-class"><pre class="language-text"><code>interface Expander {
+
+    /**
+     * Expands the value into a string. Does not accept or return null.
+     */
+    String expand(Object value);
+}
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>public class SpringMvcContract extends Contract.BaseContract implements ResourceLoaderAware {
+
+    private static final TypeDescriptor STRING_TYPE_DESCRIPTOR = TypeDescriptor
+			.valueOf(String.class);
+
+	private static class ConvertingExpanderFactory {
+
+		private final ConversionService conversionService;
+
+		ConvertingExpanderFactory(ConversionService conversionService) {
+			this.conversionService = conversionService;
+		}
+
+		Param.Expander getExpander(TypeDescriptor typeDescriptor) {
+			return value -&gt; {
+				Object converted = this.conversionService.convert(value, typeDescriptor,
+						STRING_TYPE_DESCRIPTOR);
+				return (String) converted;
+			};
+		}
+
+	}
+}
+</code></pre></div><p>Java 中的所有类型
+raw type：原始类型，对应 Class
+即我们通常说的引用类型，包括普通的类，例如 String.class、List.class
+也包括数组(Array.class)、接口(Cloneable.class)、注解(Annotation.class)、枚举(Enum.class)等
+primitive types：基本类型，对应 Class
+包括 Built-in 内置类型，例如 int.class、char.class、void.class
+也包括 Wrappers 内置类型包装类型，例如 Integer.class、Boolean.class、Void.class
+parameterized types：参数化类型，对应 ParameterizedType
+带有类型参数的类型，即常说的泛型，例如 <code>List&lt;T&gt;、Map&lt;Integer, String&gt;、List&lt;? extends Number&gt;</code>
+实现类 sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl
+type variables：类型变量类型，对应 <code>TypeVariable&lt;D&gt;</code>
+即参数化类型 ParameterizedType 中的 E、K 等类型变量，表示泛指任何类
+实现类 sun.reflect.generics.reflectiveObjects.TypeVariableImpl
+array types：泛型数组类型，对应 GenericArrayType
+元素类型是参数化类型或者类型变量的泛型数组类型，例如 T[]
+实现类 sun.reflect.generics.reflectiveObjects.GenericArrayTypeImpl
+Type 接口的另一个子接口 WildcardType 代表通配符表达式类型，或泛型表达式类型，比如?、? super T、? extends T，他并不是 Java 类型中的一种。</p> <div class="language- extra-class"><pre class="language-text"><code>private static class BuildTemplateByResolvingArgs implements RequestTemplate.Factory {
+
+    private final QueryMapEncoder queryMapEncoder;
+
+    protected final MethodMetadata metadata;
+    private final Map&lt;Integer, Expander&gt; indexToExpander = new LinkedHashMap&lt;Integer, Expander&gt;();
+
+    /** 通过metadata信息和实参创建RequestTemplate */
+    @Override
+    public RequestTemplate create(Object[] argv) {
+
+      // 把metadata中的半成品template拷贝一份
+      RequestTemplate mutable = RequestTemplate.from(metadata.template());
+
+      // 处理URI对象
+      if (metadata.urlIndex() != null) {
+        int urlIndex = metadata.urlIndex();
+        checkArgument(argv[urlIndex] != null, &quot;URI parameter %s was null&quot;, urlIndex);
+        mutable.target(String.valueOf(argv[urlIndex]));
+      }
+
+      //
+      Map&lt;String, Object&gt; varBuilder = new LinkedHashMap&lt;String, Object&gt;();
+      for (Entry&lt;Integer, Collection&lt;String&gt;&gt; entry : metadata.indexToName().entrySet()) {
+        int i = entry.getKey();
+        Object value = argv[entry.getKey()];
+        if (value != null) { // Null values are skipped.
+          if (indexToExpander.containsKey(i)) {
+            value = expandElements(indexToExpander.get(i), value);
+          }
+          for (String name : entry.getValue()) {
+            varBuilder.put(name, value);
+          }
+        }
+      }
+
+      RequestTemplate template = resolve(argv, mutable, varBuilder);
+
+      // 处理queryMap
+      if (metadata.queryMapIndex() != null) {
+        // add query map parameters after initial resolve so that they take
+        // precedence over any predefined values
+        Object value = argv[metadata.queryMapIndex()];
+        Map&lt;String, Object&gt; queryMap = toQueryMap(value);
+        template = addQueryMapQueryParameters(queryMap, template);
+      }
+
+      // 处理headerMap
+      if (metadata.headerMapIndex() != null) {
+        template =
+            addHeaderMapHeaders((Map&lt;String, Object&gt;) argv[metadata.headerMapIndex()], template);
+      }
+
+      return template;
+    }
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private RequestTemplate addHeaderMapHeaders(Map&lt;String, Object&gt; headerMap,
+                                                RequestTemplate mutable) {
+      for (Entry&lt;String, Object&gt; currEntry : headerMap.entrySet()) {
+        Collection&lt;String&gt; values = new ArrayList&lt;String&gt;();
+
+        Object currValue = currEntry.getValue();
+        if (currValue instanceof Iterable&lt;?&gt;) {
+          Iterator&lt;?&gt; iter = ((Iterable&lt;?&gt;) currValue).iterator();
+          while (iter.hasNext()) {
+            Object nextObject = iter.next();
+            values.add(nextObject == null ? null : nextObject.toString());
+          }
+        } else {
+          values.add(currValue == null ? null : currValue.toString());
+        }
+
+        mutable.header(currEntry.getKey(), values);
+      }
+      return mutable;
+    }
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private RequestTemplate addQueryMapQueryParameters(Map&lt;String, Object&gt; queryMap,
+                                                       RequestTemplate mutable) {
+      for (Entry&lt;String, Object&gt; currEntry : queryMap.entrySet()) {
+        Collection&lt;String&gt; values = new ArrayList&lt;String&gt;();
+
+        boolean encoded = metadata.queryMapEncoded();
+        Object currValue = currEntry.getValue();
+        if (currValue instanceof Iterable&lt;?&gt;) {
+          Iterator&lt;?&gt; iter = ((Iterable&lt;?&gt;) currValue).iterator();
+          while (iter.hasNext()) {
+            Object nextObject = iter.next();
+            values.add(nextObject == null ? null
+                : encoded ? nextObject.toString()
+                    : UriUtils.encode(nextObject.toString()));
+          }
+        } else {
+          values.add(currValue == null ? null
+              : encoded ? currValue.toString() : UriUtils.encode(currValue.toString()));
+        }
+
+        mutable.query(encoded ? currEntry.getKey() : UriUtils.encode(currEntry.getKey()), values);
+      }
+      return mutable;
+    }
+
+    // ...
+}
+</code></pre></div></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#前三章节回顾" class="sidebar-link reco-side-前三章节回顾" data-v-b57cc07c>前三章节回顾</a></li><li class="level-2" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#如何构造请求对象" class="sidebar-link reco-side-如何构造请求对象" data-v-b57cc07c>如何构造请求对象?</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#思路分析" class="sidebar-link reco-side-思路分析" data-v-b57cc07c>思路分析</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#http请求对象的分析-目标" class="sidebar-link reco-side-http请求对象的分析-目标" data-v-b57cc07c>Http请求对象的分析（目标）</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#接口方法的分析-数据源" class="sidebar-link reco-side-接口方法的分析-数据源" data-v-b57cc07c>接口方法的分析（数据源）</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#问题一-注解如何设计" class="sidebar-link reco-side-问题一-注解如何设计" data-v-b57cc07c>问题一：注解如何设计？</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#feign" class="sidebar-link reco-side-feign" data-v-b57cc07c>feign：</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#open-feign" class="sidebar-link reco-side-open-feign" data-v-b57cc07c>open feign：</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#问题二-为什么选择springmvc注解" class="sidebar-link reco-side-问题二-为什么选择springmvc注解" data-v-b57cc07c>问题二：为什么选择SpringMVC注解？</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#方法元数据的分析" class="sidebar-link reco-side-方法元数据的分析" data-v-b57cc07c>方法元数据的分析</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#构造请求对象整体思路" class="sidebar-link reco-side-构造请求对象整体思路" data-v-b57cc07c>构造请求对象整体思路</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#问题三-如何转换成方法元数据" class="sidebar-link reco-side-问题三-如何转换成方法元数据" data-v-b57cc07c>问题三：如何转换成方法元数据？</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#源码解读" class="sidebar-link reco-side-源码解读" data-v-b57cc07c>源码解读</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#basecontract" class="sidebar-link reco-side-basecontract" data-v-b57cc07c>BaseContract</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#springmvccontract" class="sidebar-link reco-side-springmvccontract" data-v-b57cc07c>SpringMvcContract</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#annotatedparameterprocessor" class="sidebar-link reco-side-annotatedparameterprocessor" data-v-b57cc07c>AnnotatedParameterProcessor</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#querymapparameterprocessor" class="sidebar-link reco-side-querymapparameterprocessor" data-v-b57cc07c>QueryMapParameterProcessor</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/OpenFeign/Fourth%2000dac28be4b340f190404720da9c9a22.html#requestparamparameterprocessor" class="sidebar-link reco-side-requestparamparameterprocessor" data-v-b57cc07c>RequestParamParameterProcessor</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="Sakura" data-v-248d85d6><canvas id="canvas_sakura" style="z-index:0;" data-v-248d85d6></canvas></div><canvas id="vuepress-canvas-cursor"></canvas></div></div>
+    <script src="/Sardinary/assets/js/app.b4352b80.js" defer></script><script src="/Sardinary/assets/js/7.1de0e771.js" defer></script><script src="/Sardinary/assets/js/2.32e86603.js" defer></script><script src="/Sardinary/assets/js/1.87af8fda.js" defer></script><script src="/Sardinary/assets/js/45.ee53ec88.js" defer></script>
+  </body>
+</html>

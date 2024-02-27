@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Spring Scan | Sardinary&#39;s Blog</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content=" ">
+    
+    <link rel="preload" href="/Sardinary/assets/css/0.styles.cca88062.css" as="style"><link rel="preload" href="/Sardinary/assets/js/app.b4352b80.js" as="script"><link rel="preload" href="/Sardinary/assets/js/7.1de0e771.js" as="script"><link rel="preload" href="/Sardinary/assets/js/2.32e86603.js" as="script"><link rel="preload" href="/Sardinary/assets/js/1.87af8fda.js" as="script"><link rel="preload" href="/Sardinary/assets/js/70.11dd9007.js" as="script"><link rel="prefetch" href="/Sardinary/assets/js/10.49a810cd.js"><link rel="prefetch" href="/Sardinary/assets/js/11.7175f7e3.js"><link rel="prefetch" href="/Sardinary/assets/js/14.a5477566.js"><link rel="prefetch" href="/Sardinary/assets/js/15.439772b1.js"><link rel="prefetch" href="/Sardinary/assets/js/16.16e886bc.js"><link rel="prefetch" href="/Sardinary/assets/js/17.0e6e36bb.js"><link rel="prefetch" href="/Sardinary/assets/js/18.5e148afa.js"><link rel="prefetch" href="/Sardinary/assets/js/19.73412c71.js"><link rel="prefetch" href="/Sardinary/assets/js/20.e6e484b2.js"><link rel="prefetch" href="/Sardinary/assets/js/21.7c59eb62.js"><link rel="prefetch" href="/Sardinary/assets/js/22.1a4515f8.js"><link rel="prefetch" href="/Sardinary/assets/js/23.77f49651.js"><link rel="prefetch" href="/Sardinary/assets/js/24.2978efd9.js"><link rel="prefetch" href="/Sardinary/assets/js/25.c67021f4.js"><link rel="prefetch" href="/Sardinary/assets/js/26.6879f189.js"><link rel="prefetch" href="/Sardinary/assets/js/27.a2713265.js"><link rel="prefetch" href="/Sardinary/assets/js/28.0e7ec6a5.js"><link rel="prefetch" href="/Sardinary/assets/js/29.b33743d7.js"><link rel="prefetch" href="/Sardinary/assets/js/3.5b666661.js"><link rel="prefetch" href="/Sardinary/assets/js/30.3b66f6c0.js"><link rel="prefetch" href="/Sardinary/assets/js/31.a9a2ab1e.js"><link rel="prefetch" href="/Sardinary/assets/js/32.14ad86fd.js"><link rel="prefetch" href="/Sardinary/assets/js/33.1afd794c.js"><link rel="prefetch" href="/Sardinary/assets/js/34.31730445.js"><link rel="prefetch" href="/Sardinary/assets/js/35.acb79716.js"><link rel="prefetch" href="/Sardinary/assets/js/36.f161e3da.js"><link rel="prefetch" href="/Sardinary/assets/js/37.164bb569.js"><link rel="prefetch" href="/Sardinary/assets/js/38.0e4326d9.js"><link rel="prefetch" href="/Sardinary/assets/js/39.c0cdc477.js"><link rel="prefetch" href="/Sardinary/assets/js/4.95ecc938.js"><link rel="prefetch" href="/Sardinary/assets/js/40.4c8a03a6.js"><link rel="prefetch" href="/Sardinary/assets/js/41.b3e26267.js"><link rel="prefetch" href="/Sardinary/assets/js/42.6526990c.js"><link rel="prefetch" href="/Sardinary/assets/js/43.237a07a2.js"><link rel="prefetch" href="/Sardinary/assets/js/44.20a80a6c.js"><link rel="prefetch" href="/Sardinary/assets/js/45.ee53ec88.js"><link rel="prefetch" href="/Sardinary/assets/js/46.55f62d10.js"><link rel="prefetch" href="/Sardinary/assets/js/47.2a4b0a3b.js"><link rel="prefetch" href="/Sardinary/assets/js/48.d2f40143.js"><link rel="prefetch" href="/Sardinary/assets/js/49.6f809adc.js"><link rel="prefetch" href="/Sardinary/assets/js/5.c87bfc3b.js"><link rel="prefetch" href="/Sardinary/assets/js/50.e8110b40.js"><link rel="prefetch" href="/Sardinary/assets/js/51.e5d33d8f.js"><link rel="prefetch" href="/Sardinary/assets/js/52.35081e55.js"><link rel="prefetch" href="/Sardinary/assets/js/53.f148b50f.js"><link rel="prefetch" href="/Sardinary/assets/js/54.c9fddbbe.js"><link rel="prefetch" href="/Sardinary/assets/js/55.3bf482f3.js"><link rel="prefetch" href="/Sardinary/assets/js/56.284247d8.js"><link rel="prefetch" href="/Sardinary/assets/js/57.cd2fa388.js"><link rel="prefetch" href="/Sardinary/assets/js/58.9717d8f3.js"><link rel="prefetch" href="/Sardinary/assets/js/59.387411ca.js"><link rel="prefetch" href="/Sardinary/assets/js/6.363116dc.js"><link rel="prefetch" href="/Sardinary/assets/js/60.10700fc9.js"><link rel="prefetch" href="/Sardinary/assets/js/61.37f12cd5.js"><link rel="prefetch" href="/Sardinary/assets/js/62.1ee2e76e.js"><link rel="prefetch" href="/Sardinary/assets/js/63.05cc0dee.js"><link rel="prefetch" href="/Sardinary/assets/js/64.2eefe5c7.js"><link rel="prefetch" href="/Sardinary/assets/js/65.57aedaf0.js"><link rel="prefetch" href="/Sardinary/assets/js/66.3362b95c.js"><link rel="prefetch" href="/Sardinary/assets/js/67.31c9d9fd.js"><link rel="prefetch" href="/Sardinary/assets/js/68.966d4fa1.js"><link rel="prefetch" href="/Sardinary/assets/js/69.a33abe62.js"><link rel="prefetch" href="/Sardinary/assets/js/71.8006b388.js"><link rel="prefetch" href="/Sardinary/assets/js/72.73f1646b.js"><link rel="prefetch" href="/Sardinary/assets/js/73.f53d7f97.js"><link rel="prefetch" href="/Sardinary/assets/js/74.db2bf712.js"><link rel="prefetch" href="/Sardinary/assets/js/8.1ffd42bb.js"><link rel="prefetch" href="/Sardinary/assets/js/9.8e14a092.js"><link rel="prefetch" href="/Sardinary/assets/js/vendors~docsearch.34a230bb.js">
+    <link rel="stylesheet" href="/Sardinary/assets/css/0.styles.cca88062.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>Sardinary's Blog</h3> <p class="description" data-v-59e6cb88> </p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>Sardinary Chen</span>
+          
+        <!---->
+        2024
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/Sardinary/" class="home-link router-link-active"><img src="/Sardinary/avatar.jpg" alt="Sardinary's Blog" class="logo"> <span class="site-name">Sardinary's Blog</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/Sardinary/" class="nav-link"><i class="undefined"></i>
+  🏠
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Sardinary/categories/后端/" class="nav-link"><i class="undefined"></i>
+  后端
+</a></li><li class="dropdown-item"><!----> <a href="/Sardinary/categories/Java/" class="nav-link"><i class="undefined"></i>
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/Sardinary/categories/中间件/" class="nav-link"><i class="undefined"></i>
+  中间件
+</a></li></ul></div></div><div class="nav-item"><a href="/Sardinary/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      Sardinary 🎈
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/Xiangyinfly" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/Sardinary/avatar.jpg" alt="author-avatar" class="personal-img" data-v-1fad0c41> <h3 class="name" data-v-1fad0c41>
+    Sardinary Chen
+  </h3> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>36</h3> <h6 data-v-1fad0c41>Articles</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>12</h3> <h6 data-v-1fad0c41>Tags</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/Sardinary/" class="nav-link"><i class="undefined"></i>
+  🏠
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Sardinary/categories/后端/" class="nav-link"><i class="undefined"></i>
+  后端
+</a></li><li class="dropdown-item"><!----> <a href="/Sardinary/categories/Java/" class="nav-link"><i class="undefined"></i>
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/Sardinary/categories/中间件/" class="nav-link"><i class="undefined"></i>
+  中间件
+</a></li></ul></div></div><div class="nav-item"><a href="/Sardinary/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      Sardinary 🎈
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/Xiangyinfly" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>Spring Scan</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>Sardinary Chen</span>
+          
+        <!---->
+        2024
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">Spring Scan</h1> <div data-v-8a445198><i class="iconfont reco-account" data-v-8a445198><span data-v-8a445198>Sardinary Chen</span></i> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2/26/2024</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>Spring</span><span class="tag-item" data-v-8a445198>源码解析</span></i></div></div> <div class="theme-reco-content content__default"><aside>
+💡 ***扫描的结果是beanDefinition***
+</aside> <h2 id="componentscan的扫描"><a href="#componentscan的扫描" class="header-anchor">#</a> @ComponentScan的扫描</h2> <p>解析ComponentScanAnnotationParser类：</p> <h3 id="_1️⃣-new一个scanner"><a href="#_1️⃣-new一个scanner" class="header-anchor">#</a> 1️⃣：new一个scanner</h3> <div class="language- extra-class"><pre class="language-text"><code>ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner (this.registry,componentScan.getBoolean(&quot;useDefaultFilters&quot;), this. environment, this. resourceLoader);
+</code></pre></div><p>this.registry：spring容器，用来放入产生的beanDefinition
+componentScan.getBoolean(“useDefaultFilters”)：默认为true，即使用默认的过滤器</p> <h3 id="_2️⃣-扫描器scanner去设置一些属性"><a href="#_2️⃣-扫描器scanner去设置一些属性" class="header-anchor">#</a> 2️⃣：扫描器scanner去设置一些属性</h3> <h3 id="_1-自定义bean名字"><a href="#_1-自定义bean名字" class="header-anchor">#</a> 1.自定义bean名字</h3> <div class="language- extra-class"><pre class="language-text"><code>    //自定义bean名字
+    Class&lt;? extends BeanNameGenerator&gt; generatorClass = componentScan.getClass(&quot;nameGenerator&quot;);
+    boolean useInheritedGenerator = (BeanNameGenerator.class == generatorClass);
+    //判断是否为默认值
+    scanner.setBeanNameGenerator(useInheritedGenerator ? this.beanNameGenerator :
+                BeanUtils.instantiateClass(generatorClass));
+</code></pre></div><p>默认的为AnnotationBeanNameGenerator，生成方法如下</p> <div class="language- extra-class"><pre class="language-text"><code>@Override
+public String generateBeanName (BeanDefinition definition,BeanDefinitionRegistry
+registry) {
+    if(definition instanceof AnnotatedBeanDefinition) {
+    //获取注解所指定的beanName
+    //默认为类@Component注解里value属性的值
+        String beanName = determineBeanNameFromAnnotation((AnnotatedBeanDefinition) definition);
+        if (StringUtils. hasText (beanName)) {
+        // Explicit bean name found.
+        return beanName;
+    }
+    // Fallback: generate a unique default bean name.
+    //生成默认名
+    return buildDefaultBeanName (definition, registry);
+}
+</code></pre></div><p>生成默认名的方法</p> <div class="language- extra-class"><pre class="language-text"><code>protected String buildDefaultBeanName(BeanDefinition definition) {
+    String beanClassName = definition. getBeanClassName;
+    Assert. state ( beanClassName != null,&quot;No bean class name set&quot;);
+    String shortClassName = ClassUtils. getShortName (beanClassName) ;
+    return Introspector. decapitalize(shortClassName);
+｝
+</code></pre></div><p>我们可以设置一个MyBeanNameGenerator类，实现BeanNameGenerator接口来自定义bean的名字</p> <div class="language- extra-class"><pre class="language-text"><code>public class MyBeanNameGenerator implements BeanNameGenerator {
+    @Override
+    public String generateBeanName(BeanDefinitiondefinition,BeanDefinitionRegistry
+registry) {
+        return &quot;My&quot;+definition.getBeanClassName();
+    }
+}
+</code></pre></div><p>然后在config类的@Component注解添加属性nameGenerator =
+MyBeanNameGenerator.class)以起作用</p> <h3 id="_2-设置默认代理模式"><a href="#_2-设置默认代理模式" class="header-anchor">#</a> 2.设置默认代理模式</h3> <div class="language- extra-class"><pre class="language-text"><code>ScopedProxyMode scopedProxyMode = componentScan.getEnum(&quot;scopedProxy&quot;);
+        if (scopedProxyMode != ScopedProxyMode.DEFAULT) {
+            scanner.setScopedProxyMode(scopedProxyMode);
+        }
+        else {
+            Class&lt;? extends ScopeMetadataResolver&gt; resolverClass = componentScan.getClass(&quot;scopeResolver&quot;);
+            scanner.setScopeMetadataResolver(BeanUtils.instantiateClass(resolverClass));
+        }
+</code></pre></div><p>关于scopedProxy属性： 前置知识： 假设s1类加上@Scope
+(WebApplicationContext.
+SCOPE_REQUEST)注解，即只有创建请求的时候才会生成bean。而s2类中有@Autowired的s1类（创建的时候强制要求注入s1），但是在s2创建的时候（即容器初始化的时候），s1并未被创建。spring解决该问题的方法是先生成s1的一个代理对象注入s2，而改代理对象的生成模式由@Scope注解中的proxyMode属性决定（cglib、jdk等）。
+在@ComponentScan注解的scopeProxy属性中也可以批量配置类的代理对象生成模式。
+如果类的@Scope注解中未配置代理模式，就使用@ComponentScan注解所配置的。</p> <h3 id="_3-资源匹配规则"><a href="#_3-资源匹配规则" class="header-anchor">#</a> 3.资源匹配规则</h3> <div class="language- extra-class"><pre class="language-text"><code>scanner.setResourcePattern(componentScan.getString(&quot;resourcePattern&quot;));
+</code></pre></div><p>默认为static final String DEFAULT_RESOURCE_PATTERN = “**/*.class”；
+即扫描传入路径及其子路径下的所有.class文件</p> <h3 id="_4-两个filter"><a href="#_4-两个filter" class="header-anchor">#</a> 4.两个filter</h3> <div class="language- extra-class"><pre class="language-text"><code>for (AnnotationAttributes includeFilterAttributes : componentScan.getAnnotationArray(&quot;includeFilters&quot;)) {
+            List&lt;TypeFilter&gt; typeFilters = TypeFilterUtils.createTypeFiltersFor(includeFilterAttributes, this.environment,
+                    this.resourceLoader, this.registry);
+            for (TypeFilter typeFilter : typeFilters) {
+                scanner.addIncludeFilter(typeFilter);
+            }
+        }
+        for (AnnotationAttributes excludeFilterAttributes : componentScan.getAnnotationArray(&quot;excludeFilters&quot;)) {
+            List&lt;TypeFilter&gt; typeFilters = TypeFilterUtils.createTypeFiltersFor(excludeFilterAttributes, this.environment,
+                this.resourceLoader, this.registry);
+            for (TypeFilter typeFilter : typeFilters) {
+                scanner.addExcludeFilter(typeFilter);
+            }
+        }
+</code></pre></div><blockquote><p>excludeFilter： excludeFilters = {@ComponentScan.Filter (type =
+FilterType.ASSIGNABLE_TYPE,classes = UserService. class)}
+即排除扫描路径下的UserService. class文件，不创建UserService的bean</p></blockquote> <h3 id="_5-配置懒加载"><a href="#_5-配置懒加载" class="header-anchor">#</a> 5.配置懒加载</h3> <div class="language- extra-class"><pre class="language-text"><code>boolean lazyInit = componentScan.getBoolean(&quot;lazyInit&quot;);
+        if (lazyInit) {
+            scanner.getBeanDefinitionDefaults().setLazyInit(true);
+        }
+</code></pre></div><h3 id="_6-扫描包路径"><a href="#_6-扫描包路径" class="header-anchor">#</a> 6.扫描包路径</h3> <div class="language- extra-class"><pre class="language-text"><code>Set&lt;String&gt; basePackages = new LinkedHashSet&lt;&gt;();
+        String[] basePackagesArray = componentScan.getStringArray(&quot;basePackages&quot;);//可以传入字符串数组
+        for (String pkg : basePackagesArray) {
+            String[] tokenized = StringUtils.tokenizeToStringArray(this.environment.resolvePlaceholders(pkg),
+                    ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);//按照规则解析
+            Collections.addAll(basePackages, tokenized);
+        }
+        for (Class&lt;?&gt; clazz : componentScan.getClassArray(&quot;basePackageClasses&quot;)) {
+            basePackages.add(ClassUtils.getPackageName(clazz));
+        }
+        //空处理
+        if (basePackages.isEmpty()) {
+            basePackages.add(ClassUtils.getPackageName(declaringClass));
+        }
+</code></pre></div><p>basePackageClasses属性：将传入类的包名作为路径传入
+空处理：如果未传入任何参数，就将添加该注解的config类的包路径作为扫描路径</p> <h3 id="_7-排除config类"><a href="#_7-排除config类" class="header-anchor">#</a> 7.排除config类</h3> <div class="language- extra-class"><pre class="language-text"><code>scanner.addExcludeFilter(new AbstractTypeHierarchyTraversingFilter(false, false) {
+            @Override
+            protected boolean matchClassName(String className) {
+                return declaringClass.equals(className);
+            }
+        });
+</code></pre></div><p>ExcludeFilter的作用：
+排除添加改注解的config类。因为config类在AnnotationConfigApplicationContext
+applicationContext = new
+AnnotationConfigApplicationContext(AppConfig.class)语句中已经手动加入spring容器</p> <h3 id="_3️⃣-return-scanner-doscan-包路径"><a href="#_3️⃣-return-scanner-doscan-包路径" class="header-anchor">#</a> 3️⃣：return scanner.doScan(包路径)</h3> <h3 id="doscan方法"><a href="#doscan方法" class="header-anchor">#</a> doScan方法</h3> <div class="language- extra-class"><pre class="language-text"><code>protected Set&lt;BeanDefinitionHolder&gt; doScan(String... basePackages) {
+    Assert.notEmpty(basePackages, &quot;At least one base package must be specified&quot;);
+    Set&lt;BeanDefinitionHolder&gt; beanDefinitions = new LinkedHashSet&lt;&gt;();
+    for (String basePackage : basePackages) {
+        //真正进行扫描，扫描得到的结果为BeanDefinition
+       Set&lt;BeanDefinition&gt; candidates = 1️⃣findCandidateComponents(basePackage);
+       for (BeanDefinition candidate : candidates) {
+          ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(candidate);
+          candidate.setScope(scopeMetadata.getScopeName());
+          String beanName = this.beanNameGenerator.generateBeanName(candidate, this.registry);
+          if (candidate instanceof AbstractBeanDefinition abstractBeanDefinition) {
+             postProcessBeanDefinition(abstractBeanDefinition, beanName);
+          }
+          if (candidate instanceof AnnotatedBeanDefinition annotatedBeanDefinition) {
+             AnnotationConfigUtils.processCommonDefinitionAnnotations(annotatedBeanDefinition);
+          }
+
+        //检查是否扫描到相同的BeanDefinition。不同包可能扫描到相同的bean
+          if (5️⃣checkCandidate(beanName, candidate)) {
+             BeanDefinitionHolder definitionHolder = new BeanDefinitionHolder(candidate, beanName);
+             definitionHolder =
+                   AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);
+             beanDefinitions.add(definitionHolder);
+             //在spring容器中注册
+             registerBeanDefinition(definitionHolder, this.registry);
+          }
+       }
+    }
+    return beanDefinitions;
+}
+</code></pre></div><h3 id="_5️⃣检测是否存在相同名称的bean-checkcandidate-beanname"><a href="#_5️⃣检测是否存在相同名称的bean-checkcandidate-beanname" class="header-anchor">#</a> 5️⃣检测是否存在相同名称的bean：checkCandidate(beanName,</h3> <p>candidate)</p> <div class="language- extra-class"><pre class="language-text"><code>protected boolean checkCandidate(String beanName, BeanDefinition beanDefinition) throws IllegalStateException {
+    if (!this.registry.containsBeanDefinition(beanName)) {
+       return true;
+    }
+    BeanDefinition existingDef = this.registry.getBeanDefinition(beanName);
+    BeanDefinition originatingDef = existingDef.getOriginatingBeanDefinition();
+    if (originatingDef != null) {
+       existingDef = originatingDef;
+    }
+    if (6️⃣isCompatible(beanDefinition, existingDef)) {  //判断是否兼容
+       return false;
+    }
+    //抛异常，spring容器不能正常启动
+    throw new ConflictingBeanDefinitionException(&quot;Annotation-specified bean name '&quot; + beanName +
+          &quot;' for bean class [&quot; + beanDefinition.getBeanClassName() + &quot;] conflicts with existing, &quot; +
+          &quot;non-compatible bean definition of same name and class [&quot; + existingDef.getBeanClassName() + &quot;]&quot;);
+}
+</code></pre></div><h3 id="_6️⃣判断是否兼容-iscompatible-beandefinition"><a href="#_6️⃣判断是否兼容-iscompatible-beandefinition" class="header-anchor">#</a> 6️⃣判断是否兼容：isCompatible(beanDefinition,</h3> <p>existingDef))</p> <div class="language- extra-class"><pre class="language-text"><code>protected boolean isCompatible(BeanDefinition newDef, BeanDefinition existingDef) {
+    //两个类不一样，返回false-&gt;导致抛异常
+    return (!(existingDef instanceof ScannedGenericBeanDefinition) ||  // explicitly registered overriding bean
+          (newDef.getSource() != null &amp;&amp; newDef.getSource().equals(existingDef.getSource())) ||  // scanned same file twice
+          newDef.equals(existingDef));  // scanned equivalent class twice
+}
+</code></pre></div><h3 id="_1️⃣真正进行扫描的方法-findcandidatecomponents"><a href="#_1️⃣真正进行扫描的方法-findcandidatecomponents" class="header-anchor">#</a> 1️⃣真正进行扫描的方法：findCandidateComponents</h3> <div class="language- extra-class"><pre class="language-text"><code>public Set&lt;BeanDefinition&gt; findCandidateComponents(String basePackage) {
+    //7️⃣优化的方法
+    if (this.componentsIndex != null &amp;&amp; indexSupportsIncludeFilters()) {
+       return addCandidateComponentsFromIndex(this.componentsIndex, basePackage);
+    }
+    else {
+        //一般执行else
+       return 2️⃣scanCandidateComponents(basePackage);
+    }
+}
+</code></pre></div><h3 id="_7️⃣componentsindex机制"><a href="#_7️⃣componentsindex机制" class="header-anchor">#</a> 7️⃣componentsIndex机制</h3> <p>在spring.components文件中指定要成为bean的类。
+spring只会去扫描spring.components文件中指定的类并生成bean。</p> <div class="language- extra-class"><pre class="language-text"><code>com.example.service.Service1=org.springframework.stereotype.Component
+</code></pre></div><h3 id="_2️⃣else的方法-scancandidatecomponents"><a href="#_2️⃣else的方法-scancandidatecomponents" class="header-anchor">#</a> 2️⃣else的方法：scanCandidateComponents</h3> <div class="language- extra-class"><pre class="language-text"><code>private Set&lt;BeanDefinition&gt; scanCandidateComponents(String basePackage) {
+    Set&lt;BeanDefinition&gt; candidates = new LinkedHashSet&lt;&gt;();
+    try {
+       String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
+             resolveBasePackage(basePackage) + '/' + this.resourcePattern;  //获取完整的路径
+       Resource[] resources = getResourcePatternResolver().getResources(packageSearchPath);//获取扫描路径下面的所有.class文件资源
+       boolean traceEnabled = logger.isTraceEnabled();
+       boolean debugEnabled = logger.isDebugEnabled();
+       for (Resource resource : resources) {
+          String filename = resource.getFilename();
+          if (filename != null &amp;&amp; filename.contains(ClassUtils.CGLIB_CLASS_SEPARATOR)) {
+             // Ignore CGLIB-generated classes in the classpath
+             continue;
+          }
+          if (traceEnabled) {
+             logger.trace(&quot;Scanning &quot; + resource);
+          }
+          try {
+             MetadataReader metadataReader = getMetadataReaderFactory().getMetadataReader(resource); //得到类的元数据读取器
+             if (3️⃣isCandidateComponent(metadataReader)) {  //进行第一次判断
+                ScannedGenericBeanDefinition sbd = new ScannedGenericBeanDefinition(metadataReader);  //判断完成后生成beanDefinition
+                sbd.setSource(resource);
+                if (4️⃣isCandidateComponent(sbd)) {  //进行第二次判断
+                   if (debugEnabled) {
+                      logger.debug(&quot;Identified candidate component class: &quot; + resource);
+                   }
+                   candidates.add(sbd);  //满足条件后加入集合返回
+                }
+                else {
+                   if (debugEnabled) {
+                      logger.debug(&quot;Ignored because not a concrete top-level class: &quot; + resource);
+                   }
+                }
+             }
+             else {
+                if (traceEnabled) {
+                   logger.trace(&quot;Ignored because not matching any filter: &quot; + resource);
+                }
+             }
+          }
+          catch (FileNotFoundException ex) {
+             if (traceEnabled) {
+                logger.trace(&quot;Ignored non-readable &quot; + resource + &quot;: &quot; + ex.getMessage());
+             }
+          }
+          catch (Throwable ex) {
+             throw new BeanDefinitionStoreException(
+                   &quot;Failed to read candidate component class: &quot; + resource, ex);
+          }
+       }
+    }
+    catch (IOException ex) {
+       throw new BeanDefinitionStoreException(&quot;I/O failure during classpath scanning&quot;, ex);
+    }
+    return candidates;
+}
+</code></pre></div><blockquote><p>问题：如何得到扫描路径下的类的metadata？</p></blockquote> <blockquote><p>解决：
+如果使用反射，会在spring容器加载的时候将扫描路径下的所有类加载到jvm中，如果所有这些类中只有极少一部分最终需要成为bean，会造成很大的资源浪费
+使用asm技术，不涉及到类的加载就可以得到类的信息</p></blockquote> <p>3️⃣第一次判断isCandidateComponent(metadataReader)：</p> <div class="language- extra-class"><pre class="language-text"><code>protected boolean isCandidateComponent(MetadataReader metadataReader) throws IOException {
+    for (TypeFilter tf : this.excludeFilters) {
+        //如果该类信息与其中一个excludeFilters匹配，则返回false，该类会被排除掉
+       if (tf.match(metadataReader, getMetadataReaderFactory())) {
+          return false;
+       }
+    }
+    for (TypeFilter tf : this.includeFilters) {
+        //至少匹配一个includeFilters，才有可能成为一个bean
+       if (tf.match(metadataReader, getMetadataReaderFactory())) {
+          return isConditionMatch(metadataReader);  //判断有没有@Conditional注解且注解自定义的条件
+
+       }
+    }
+    return false;
+}
+</code></pre></div><blockquote><p>tf.match(metadataReader, getMetadataReaderFactory()):
+如果没有指定过滤器，则会使用默认过滤器。 默认过滤器在new
+scanner的时候设置：componentScan.getBoolean(“useDefaultFilters”)：默认为true，即使用默认的过滤器
+在scanner的构造方法中，会调用方法设置三个includeFilter（三个注解对应的过滤器，@Component，@Named等）</p></blockquote> <blockquote><p>isConditionMatch(metadataReader)：
+判断有没有满足利用@Conditional注解自定义的条件。
+写一个配置类c实现Condition接口，重写matches方法，
+在其中自定义bean创建的条件。service类中添加@Conditional(c.class)以生效。</p></blockquote> <p>4️⃣第二次判断isCandidateComponent(sbd)：</p> <div class="language- extra-class"><pre class="language-text"><code>protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
+    AnnotationMetadata metadata = beanDefinition.getMetadata();
+    return (metadata.isIndependent() &amp;&amp; (metadata.isConcrete() ||
+          (metadata.isAbstract() &amp;&amp; metadata.hasAnnotatedMethods(Lookup.class.getName()))));
+}
+</code></pre></div><blockquote><p>metadata.isIndependent()：是否为独立类。非静态的内部类不是独立类，非静态的内部类实例化要依赖外部类的对象。非静态的内部类被排除不能生成bean
+静态的内部类实例化不依赖外部类的对象，可以生成bean</p></blockquote> <blockquote><p>metadata.isConcrete()：既不是接口也不是抽象类，返回true。接口和抽象类不能实例化，不能生成bean对象。mybatis中的mapper接口通过动态代理生成代理类的bean对象</p></blockquote> <blockquote><p>metadata.isAbstract() &amp;&amp;
+metadata.hasAnnotatedMethods(Lookup.class.getName()：是抽象类且类中存在添加了Lookup注解的方法
+，也返回true sd 独立的 且 类中存在添加了Lookup注解的方法 的 抽象类
+生成的bean对象是其代理对象</p></blockquote> <h2 id="关于-lookup注解"><a href="#关于-lookup注解" class="header-anchor">#</a> 关于@Lookup注解</h2> <blockquote><p>@Lookup注解的属性需要指定一个bean名字，@Lookup(bean名)</p></blockquote> <blockquote><p>添加了@Lookup注解的方法不会执行方法里的逻辑，只会返回bean名字对应的bean。
+因此返回值类型为bean对象的类型。</p></blockquote> <blockquote><p>问题：假设s1类是singleton，s2类是prototype且s1类中有属性s2。
+1.在s1中用普通方法直接打印多次s2得到的s2对象是同一个吗？
+2.用s1的添加了@Lookup注解的方法获取s2，得到的s2对象是同一个吗？</p></blockquote> <blockquote><p>答案： 1.是同一个。因为s1中的s2属性在创建s1的bean的时候已经注入。
+2.不是同一个。</p></blockquote></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#componentscan的扫描" class="sidebar-link reco-side-componentscan的扫描" data-v-b57cc07c>@ComponentScan的扫描</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_1️⃣-new一个scanner" class="sidebar-link reco-side-_1️⃣-new一个scanner" data-v-b57cc07c>1️⃣：new一个scanner</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_2️⃣-扫描器scanner去设置一些属性" class="sidebar-link reco-side-_2️⃣-扫描器scanner去设置一些属性" data-v-b57cc07c>2️⃣：扫描器scanner去设置一些属性</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_1-自定义bean名字" class="sidebar-link reco-side-_1-自定义bean名字" data-v-b57cc07c>1.自定义bean名字</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_2-设置默认代理模式" class="sidebar-link reco-side-_2-设置默认代理模式" data-v-b57cc07c>2.设置默认代理模式</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_3-资源匹配规则" class="sidebar-link reco-side-_3-资源匹配规则" data-v-b57cc07c>3.资源匹配规则</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_4-两个filter" class="sidebar-link reco-side-_4-两个filter" data-v-b57cc07c>4.两个filter</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_5-配置懒加载" class="sidebar-link reco-side-_5-配置懒加载" data-v-b57cc07c>5.配置懒加载</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_6-扫描包路径" class="sidebar-link reco-side-_6-扫描包路径" data-v-b57cc07c>6.扫描包路径</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_7-排除config类" class="sidebar-link reco-side-_7-排除config类" data-v-b57cc07c>7.排除config类</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_3️⃣-return-scanner-doscan-包路径" class="sidebar-link reco-side-_3️⃣-return-scanner-doscan-包路径" data-v-b57cc07c>3️⃣：return scanner.doScan(包路径)</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#doscan方法" class="sidebar-link reco-side-doscan方法" data-v-b57cc07c>doScan方法</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_5️⃣检测是否存在相同名称的bean-checkcandidate-beanname" class="sidebar-link reco-side-_5️⃣检测是否存在相同名称的bean-checkcandidate-beanname" data-v-b57cc07c>5️⃣检测是否存在相同名称的bean：checkCandidate(beanName,</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_6️⃣判断是否兼容-iscompatible-beandefinition" class="sidebar-link reco-side-_6️⃣判断是否兼容-iscompatible-beandefinition" data-v-b57cc07c>6️⃣判断是否兼容：isCompatible(beanDefinition,</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_1️⃣真正进行扫描的方法-findcandidatecomponents" class="sidebar-link reco-side-_1️⃣真正进行扫描的方法-findcandidatecomponents" data-v-b57cc07c>1️⃣真正进行扫描的方法：findCandidateComponents</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_7️⃣componentsindex机制" class="sidebar-link reco-side-_7️⃣componentsindex机制" data-v-b57cc07c>7️⃣componentsIndex机制</a></li><li class="level-3" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#_2️⃣else的方法-scancandidatecomponents" class="sidebar-link reco-side-_2️⃣else的方法-scancandidatecomponents" data-v-b57cc07c>2️⃣else的方法：scanCandidateComponents</a></li><li class="level-2" data-v-b57cc07c><a href="/Sardinary/blogs/Spring/Spring%20Scan%205848c671de764455ab85859e40a961aa.html#关于-lookup注解" class="sidebar-link reco-side-关于-lookup注解" data-v-b57cc07c>关于@Lookup注解</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="Sakura" data-v-248d85d6><canvas id="canvas_sakura" style="z-index:0;" data-v-248d85d6></canvas></div><canvas id="vuepress-canvas-cursor"></canvas></div></div>
+    <script src="/Sardinary/assets/js/app.b4352b80.js" defer></script><script src="/Sardinary/assets/js/7.1de0e771.js" defer></script><script src="/Sardinary/assets/js/2.32e86603.js" defer></script><script src="/Sardinary/assets/js/1.87af8fda.js" defer></script><script src="/Sardinary/assets/js/70.11dd9007.js" defer></script>
+  </body>
+</html>
